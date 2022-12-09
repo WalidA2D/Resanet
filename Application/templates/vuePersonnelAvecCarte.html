@@ -1,0 +1,110 @@
+
+{% include "vueEnteteGestionnaire.html" %}
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-4">
+
+			<p class="alert alert-default" role="alert">Liste du personnel avec carte de restautation : </p>
+
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+
+			<table class="table">
+				<thead>
+				<tr>
+					<th>N° Carte</th>
+					<th colspan="1">Etat</th>
+					<th colspan="1">Matricule</th>
+					<th colspan="1">Nom</th>
+					<th colspan="1">Prenom</th>
+					<th colspan="1">Service</th>
+					<th colspan="1">Changer état</th>
+					<th colspan="1">Solde</th>
+					<th colspan="1"></th>
+
+
+				</tr>
+				</thead>
+				<tbody>
+				{% for i in range(nbPersonnel) %}
+
+
+				<tr>
+					<td>{{personnel[i]['matricule']}}</td>
+
+					<td>{{personnel[i]['activee']}}</td>
+					<td>{{personnel[i]['matricule']}}</td>
+					<td>{{personnel[i]['nom']}}</td>
+					<td>{{personnel[i]['prenom']}}</td>
+					<td>{{personnel[i]['nomService']}}</td>
+
+					{% if personnel[i]['activee'] == true %}
+					<td><a href="/gestionnaire/seConnecter/AvecCarte/Bloquer/{{personnel[i]['matricule']}}" ><button type="button" class="btn btn-success">Active</button></a></td>
+
+
+
+					{% else %}
+					<td><a href="/gestionnaire/seConnecter/AvecCarte/Activer/{{personnel[i]['matricule']}}"><button type="button" class="btn btn-danger">Bloquer</button></a></td>
+					{% endif %}
+
+					<td><form action="/gestionnaire/seConnecter/AvecCarte/Crediter/{{personnel[i]['matricule']}}" method="POST">
+
+					<div class="input-group mb-3">
+					  <input type="text" class="form-control" placeholder="{{personnel[i]['solde']}} €" aria-label="{{personnel[i]['solde']}}" aria-describedby="basic-addon2" name="Crediter">
+					  <div class="input-group-append">
+						<button class="btn btn-outline-secondary" type="submit">Créditer</button>
+
+
+					  </div>
+					</div>
+						</form>
+					</td>
+					{% if personnel[i]['activee'] == true %}
+					<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{personnel[i]['matricule']}}">
+  							Réinitialiser MDP
+						</button>
+
+					<!-- Modal -->
+					<div class="modal fade" id="exampleModal{{personnel[i]['matricule']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog" role="document">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel{{personnel[i]['matricule']}}"> Réinitialiser le mot de passe de {{personnel[i]['nom']}}</h5>
+						  </div>
+						  <div class="modal-body">
+							Etes-vous sur de vouloir Réinitialiser le mot de passe ?
+						  </div>
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+							<a href="/gestionnaire/seConnecter/AvecCarte/ReinitialiserMdp/{{personnel[i]['matricule']}}" > <button type="button" class="btn btn-primary">Réinitialiser</button> </a>
+						  </div>
+						</div>
+					  </div>
+					</div>
+
+					</td>
+					{% endif %}
+
+				</tr>
+				{% endfor %}
+
+				</tbody>
+
+			</table>
+
+		</div>
+
+	</div>
+	
+
+
+</div>
+
+
+
+{% include "vuePied.html" %}

@@ -1,0 +1,60 @@
+{% include "vueEnteteGestionnaire.html" %}
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-4">
+
+			<p class="alert alert-default" role="alert">Consulter l'historique des reservation des comptes : </p>
+
+            <form action="/gestionnaire/seConnecter/pourUneDate" method="POST">
+                <input type="date" name="date">
+                <button type="submit">Rechercher</button>
+            </form>
+
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+
+
+
+
+
+                    <table class="table table-striped">
+                       <thead>
+                          <tr>
+                             <th>N° Carte</th>
+                             <th>Nom</th>
+                             <th>Prenom</th>
+                             <th>Service</th>
+                          </tr>
+                       </thead>
+                       <tbody>
+                          {% for i in range( data | length ) %}
+                             <tr>
+                                <td>{{data[i]['numeroCarte']}}</td>
+                                <td>{{data[i]['nom']}}</td>
+                                <td>{{data[i]['prenom']}}</td>
+                                <td>{{data[i]['nomService']}}</td>
+                             </tr>
+                          {% endfor %}
+                       </tbody>
+                    </table>
+
+
+
+
+
+
+
+
+
+		</div>
+
+	</div>
+
+
+</div>
+
+{% include "vuePied.html" %}

@@ -1,0 +1,90 @@
+
+{% include "vueEnteteGestionnaire.html" %}
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-4">
+
+			<p class="alert alert-default" role="alert">Liste du personnel sans carte de restautation : </p>
+
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+
+			<table class="table">
+				<thead>
+				<tr>
+					<th>N° Carte</th>
+					<th colspan="1">Nom</th>
+					<th colspan="1">Prenom</th>
+					<th colspan="1">Service</th>
+
+				</tr>
+				</thead>
+				<tbody>
+				{% for i in range(nbPersonnel) %}
+				<tr>
+					<td>{{personnel[i]['matricule']}}</td>
+					<td>{{personnel[i]['nom']}}</td>
+					<td>{{personnel[i]['prenom']}}</td>
+					<td>{{personnel[i]['nomService']}}</td>
+					<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{personnel[i]['matricule']}}">
+  							Créer une carte
+						</button>
+
+					<!-- Modal -->
+					<div class="modal fade" id="exampleModal{{personnel[i]['matricule']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog" role="document">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel{{personnel[i]['matricule']}}">
+								<form action="/gestionnaire/seConnecter/SansCarte/creerCarte/{{personnel[i]['matricule']}}" method="POST" name="création">
+								<strong>Nom :</strong>  {{personnel[i]['nom']}} <br>
+								<strong>Prénom :</strong> {{personnel[i]['prenom']}} <br>
+								<strong>Matricule :</strong> {{personnel[i]['matricule']}} <br>
+
+								<label>Etat du compte :</label> <br>
+								<input type="radio" name="activer"
+									   value="0"  checked/> Bloquer la carte
+								<input type="radio" name="activer"
+									   value="1" /> Activer la carte
+
+
+							</h5>
+						  </div>
+
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+							  <button type="submit" class="btn btn-primary">Valider</button>
+						  </div>
+							</form>
+						</div>
+					  </div>
+					<td/>
+
+
+				</tr>
+				{% endfor %}
+
+				</tbody>
+
+
+
+
+
+
+			</table>
+		</div>
+	</div>
+
+
+
+</div>
+
+
+
+
+{% include "vuePied.html" %}
